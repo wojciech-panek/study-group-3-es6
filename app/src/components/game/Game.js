@@ -19,18 +19,18 @@ export default class Game extends Component {
 
   create() {
     this.game.physics.startSystem(Phaser.Physics.P2JS);
+    this.game.physics.p2.defaultRestitution = 0.8;
 
     this.cursors = this.game.input.keyboard.createCursorKeys();
     this.game.add.tileSprite(0, 0, window.innerWidth, window.innerHeight, 'grass');
 
     this.player = this.game.add.sprite(200, 200, 'player');
     this.game.physics.p2.enable(this.player);
+    this.player.body.setZeroDamping();
+    this.player.body.fixedRotation = true;
 
-    // this.ball = this.game.add.sprite(50, 50, 'ball');
-    // this.game.physics.enable(this.ball, false);
-    // this.player.body.collides(ball);
-    // var player§ollisionGroup = game.physics.p2.createCollisionGroup();
-    // var footballCollisionGroup = game.physics.p2.createCollisionGroup();
+    this.ball = this.game.add.sprite(50, 50, 'ball');
+    this.game.physics.p2.enable(this.ball);
   }
 
   update() {
@@ -39,15 +39,15 @@ export default class Game extends Component {
     this.player.body.setZeroVelocity();
 
     if (left.isDown) {
-      this.player.body.moveLeft(200);
+      this.player.body.moveLeft(300);
     } else if (right.isDown) {
-      this.player.body.moveRight(200);
+      this.player.body.moveRight(300);
     }
 
     if (up.isDown) {
-      this.player.body.moveUp(200);
+      this.player.body.moveUp(300);
     } else if (down.isDown) {
-      this.player.body.moveDown(200);
+      this.player.body.moveDown(300);
     }
   }
 
