@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import grass from './grass.png';
 import ball from './football.png';
 import player from './player.png';
+import gate from './gate.png';
 
 export default class Game extends Component {
   shouldComponentUpdate() {
@@ -15,6 +16,7 @@ export default class Game extends Component {
     this.game.load.image('grass', grass);
     this.game.load.spritesheet('ball', ball);
     this.game.load.spritesheet('player', player);
+    this.game.load.spritesheet('gate', gate);
   }
 
   create() {
@@ -24,13 +26,17 @@ export default class Game extends Component {
     this.cursors = this.game.input.keyboard.createCursorKeys();
     this.game.add.tileSprite(0, 0, window.innerWidth, window.innerHeight, 'grass');
 
-    this.player = this.game.add.sprite(200, 200, 'player');
+    this.player = this.game.add.sprite(window.innerWidth / 2, window.innerHeight - 70, 'player');
     this.game.physics.p2.enable(this.player);
     this.player.body.setZeroDamping();
     this.player.body.fixedRotation = true;
 
-    this.ball = this.game.add.sprite(50, 50, 'ball');
+    this.ball = this.game.add.sprite(window.innerWidth / 2, window.innerHeight / 2, 'ball');
     this.game.physics.p2.enable(this.ball);
+
+    this.gate = this.game.add.sprite(window.innerWidth / 2, 50, 'gate');
+    this.game.physics.p2.enable(this.gate);
+    this.gate.body.static = true;
   }
 
   update() {
