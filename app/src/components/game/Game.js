@@ -8,15 +8,23 @@ import player from './player.png';
 import gate from './gate.png';
 
 export default class Game extends Component {
+  constructor() {
+    super();
+    this.assets = new Map();
+    this.assets.set('ball', ball);
+    this.assets.set('player', player);
+    this.assets.set('gate', gate);
+  }
+
   shouldComponentUpdate() {
     return false;
   }
 
   preload() {
     this.game.load.image('grass', grass);
-    this.game.load.spritesheet('ball', ball);
-    this.game.load.spritesheet('player', player);
-    this.game.load.spritesheet('gate', gate);
+    for (const [assetName, assetSrc] of this.assets) {
+      this.game.load.spritesheet(assetName, assetSrc);
+    }
   }
 
   create() {
@@ -61,7 +69,7 @@ export default class Game extends Component {
     const {preload, create, update} = this;
 
     this.game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO,
-      this.refs.gameContainer, {preload, create, update});
+      this.refs.gameContainer, {preload: preload.bind(this), create, update});
   }
 
   render() {
